@@ -1,7 +1,11 @@
 import React,{useState} from 'react';
-import {View, Text, StyleSheet, SafeAreaView, StatusBar, TouchableOpacity, FlatList} from 'react-native';
+import {View, Text, StyleSheet, SafeAreaView, StatusBar, TouchableOpacity, FlatList, Modal} from 'react-native';
 import {Ionicons} from '@expo/vector-icons';
 import TaskList from './src/components/TaskList';
+import * as Animatable from 'react-native-animatable';
+
+const AnimatableBtn = Animatable.createAnimatableComponent(TouchableOpacity);
+
 export default function App(){
   const [task, setTask] = useState([
     {key: 1, task: 'Comprar pão'},
@@ -11,6 +15,9 @@ export default function App(){
     {key: 5, task: 'Assitir o 1° video'},
 
   ]);
+
+  const [open, setOpen] = useState(false);
+
   return (
     <SafeAreaView style={styles.container}>
       <StatusBar backgroundColor='#171d31' barStyle="ligth-content"/>
@@ -26,10 +33,21 @@ export default function App(){
      renderItem={({item}) => <TaskList data={item} />} // rederiza (mostra) os itens
      />
 
-     <TouchableOpacity style={styles.fab}>
-       <Ionicons name="ios-add" size={35} color="#FFF"/>
+     <Modal animationType="slide" transparent={false} visible={open}>
+       <SafeAreaView>
+         <Text> Modal 12312</Text>
+       </SafeAreaView>
+     </Modal>
 
-     </TouchableOpacity>
+     <AnimatableBtn style={styles.fab}
+     style={styles.fab}
+     useNativeDriver
+     animation="bounceInUp"
+     duration={1500}
+     onPress={() => setOpen(true)}
+     >
+       <Ionicons name="ios-add" size={35} color="#FFF"/>
+     </AnimatableBtn>
     </SafeAreaView>
 
   );
